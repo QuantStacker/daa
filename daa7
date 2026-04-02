@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <limits.h>
+
+int n, graph[10][10], dp[1024][10];
+
+int min(int a, int b) { return a < b ? a : b; }
+
+int tsp(int mask, int pos) {
+    if (mask == (1 << n) - 1)
+        return graph[pos][0];
+
+    if (dp[mask][pos] != -1)
+        return dp[mask][pos];
+
+    int ans = INT_MAX;
+
+    for (int i = 0; i < n; i++) {
+        if (!(mask & (1 << i))) {
+            int newAns = graph[pos][i] +
+                         tsp(mask | (1 << i), i);
+            ans = min(ans, newAns);
+        }
+    }
+
+    return dp[mask][pos] = ans;
+}
+
+int main() {
+    printf("Enter no. of cities: ");
+    scanf("%d", &n);
+
+    printf("Enter distance matrix:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    // Initialize DP
+    for (int i = 0; i < (1 << n); i++)
+        for (int j = 0; j < n; j++)
+            dp[i][j] = -1;
+
+    int result = tsp(1, 0);
+
+    printf("\nMinimum travelling cost : %d\n", result);
+
+    return 0;
+}
