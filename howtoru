@@ -1,0 +1,20 @@
+Step 1: Save file
+
+Save your code as:
+
+job.c
+Step 2: Compile
+gcc job.c -o job
+Step 3: Run
+./job
+
+👉 On Windows:
+
+job.exe
+
+
+linux 
+
+nano job.c
+gcc job.c -o job
+./job
